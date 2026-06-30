@@ -28,12 +28,17 @@ jobs:
       - name: Build debug APK
         run: ./gradlew assembleDebug --stacktrace 2>&1 | tee build-output.log
 
+      - name: List APK output dir
+        if: success()
+        run: find app/build/outputs -type f -name "*.apk" -print
+
       - name: Upload APK artifact
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
           path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
 
       - name: Publish failure log as Gist
         if: failure()
