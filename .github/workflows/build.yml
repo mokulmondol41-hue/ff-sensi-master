@@ -26,10 +26,24 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew assembleDebug --stacktrace 2>&1 | tee build-output.log
 
       - name: Upload APK artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
           path: app/build/outputs/apk/debug/*.apk
+
+      - name: Publish failure log as Gist
+        if: failure()
+        run: |
+          tail -c 60000 build-output.log > build-output-tail.log
+          python3 -c "
+          import json
+          with open('build-output-tail.log') as f:
+              content = f.read()
+          with open('payload.json', 'w') as out:
+              json.dump({'description': 'Build failure log', 'public': False, 'files': {'build-output.log': {'content': content}}}, out)
+          "
+          curl -s -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -d @payload.json https://api.github.com/gists
