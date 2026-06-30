@@ -2,15 +2,20 @@ package com.example.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val FieryOrange = Color(0xFFFF5722)
-val LightOrange = Color(0xFFFF8A65)
-val CyberYellow = Color(0xFFFFC107)
+// Primary blue palette
+val PrimaryBlue = Color(0xFF1565C0)
+val DeepBlue = Color(0xFF0D47A1)
+val LightBlue = Color(0xFF42A5F5)
+val SkyBlueAccent = Color(0xFF64B5F6)
 
-val DarkGrayBg = Color(0xFF0F0F12)
-val CardBg = Color(0xFF16161D)
-val CardBorder = Color(0xFF2D2D3A)
-val SurfaceVariantBg = Color(0xFF1E1E26)
+// White / light backgrounds
+val PureWhite = Color(0xFFFFFFFF)
+val BackgroundWhite = Color(0xFFF5F9FF)
+val CardWhite = Color(0xFFFFFFFF)
+val CardBorderBlue = Color(0xFFD6E4F7)
+val SurfaceVariantBlue = Color(0xFFE8F1FC)
 
-val TextPrimary = Color(0xFFFFFFFF)
-val TextSecondary = Color(0xFFABB0BA)
-val TextMuted = Color(0xFF6C727E)
+// Text colors
+val TextPrimaryDark = Color(0xFF10243E)
+val TextSecondaryBlue = Color(0xFF4A6486)
+val TextMutedBlue = Color(0xFF8AA3C2)

@@ -1,40 +1,29 @@
 package com.example.ui.theme
 
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme =
-  darkColorScheme(
-    primary = FieryOrange,
-    secondary = LightOrange,
-    tertiary = CyberYellow,
-    background = DarkGrayBg,
-    surface = CardBg,
-    onPrimary = TextPrimary,
-    onSecondary = TextPrimary,
-    onBackground = TextPrimary,
-    onSurface = TextPrimary,
-    surfaceVariant = SurfaceVariantBg,
-    onSurfaceVariant = TextSecondary,
-    outline = CardBorder
-  )
-
-private val LightColorScheme = DarkColorScheme
+private val AppColorScheme = lightColorScheme(
+    primary = PrimaryBlue,
+    secondary = LightBlue,
+    tertiary = SkyBlueAccent,
+    background = BackgroundWhite,
+    surface = CardWhite,
+    onPrimary = PureWhite,
+    onSecondary = PureWhite,
+    onBackground = TextPrimaryDark,
+    onSurface = TextPrimaryDark,
+    surfaceVariant = SurfaceVariantBlue,
+    onSurfaceVariant = TextSecondaryBlue,
+    outline = CardBorderBlue
+)
 
 @Composable
 fun MyApplicationTheme(
-  darkTheme: Boolean = true, // Force premium dark gaming companion theme
-  dynamicColor: Boolean = false, // Use our handcrafted cohesive gaming theme colors
-  content: @Composable () -> Unit,
+    darkTheme: Boolean = false, // Force clean white & blue theme
+    dynamicColor: Boolean = false, // Use our handcrafted white/blue theme colors
+    content: @Composable () -> Unit,
 ) {
-  val colorScheme = DarkColorScheme
-
-  MaterialTheme(colorScheme = colorScheme, typography = Typography, content = content)
+    MaterialTheme(colorScheme = AppColorScheme, typography = Typography, content = content)
 }

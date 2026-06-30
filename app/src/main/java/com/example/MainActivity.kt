@@ -22,9 +22,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bolt
+import androidx.compose.material.icons.filled.CenterFocusStrong
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.FiberManualRecord
+import androidx.compose.material.icons.filled.GpsFixed
+import androidx.compose.material.icons.filled.PhoneAndroid
+import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.TrackChanges
+import androidx.compose.material.icons.filled.ZoomIn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -137,8 +145,8 @@ fun SelectDeviceScreen(
                         Brush.verticalGradient(
                             colors = listOf(
                                 Color.Transparent,
-                                Color(0xAA000000),
-                                Color(0xFF0F0F12)
+                                Color(0xAA0D47A1),
+                                Color(0xFF0D47A1)
                             )
                         )
                     )
@@ -372,7 +380,7 @@ fun DeviceItemCard(
                             text = device.fullName,
                             style = MaterialTheme.typography.bodyLarge.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         )
                         if (isCustomGenerated) {
@@ -448,8 +456,15 @@ fun RecommendedSettingsScreen(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
+            Icon(
+                imageVector = Icons.Default.Bolt,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(20.dp)
+            )
+            Spacer(modifier = Modifier.width(6.dp))
             Text(
-                text = "⚡ SENSITIVITY CONFIG",
+                text = "SENSITIVITY CONFIG",
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.ExtraBold,
                     color = MaterialTheme.colorScheme.primary,
@@ -476,20 +491,31 @@ fun RecommendedSettingsScreen(
                     .padding(20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "📱 Selected Phone Model",
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        letterSpacing = 0.5.sp
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.PhoneAndroid,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(14.dp)
                     )
-                )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = "Selected Phone Model",
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            letterSpacing = 0.5.sp
+                        )
+                    )
+                }
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = device.fullName,
                     style = MaterialTheme.typography.headlineSmall.copy(
                         fontWeight = FontWeight.Black,
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onSurface,
                         textAlign = TextAlign.Center
                     )
                 )
@@ -504,8 +530,15 @@ fun RecommendedSettingsScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(14.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = "⚙️ Recommended DPI: ",
+                            text = "Recommended DPI: ",
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = FontWeight.Medium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -515,7 +548,7 @@ fun RecommendedSettingsScreen(
                             text = device.recommendedDpi,
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         )
                     }
@@ -530,23 +563,31 @@ fun RecommendedSettingsScreen(
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Text(
-                text = "🎯 RECOMMENDED SENSITIVITIES",
-                style = MaterialTheme.typography.labelSmall.copy(
-                    fontWeight = FontWeight.ExtraBold,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    letterSpacing = 0.5.sp
-                ),
-                modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)
-            )
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)) {
+                Icon(
+                    imageVector = Icons.Default.GpsFixed,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.size(14.dp)
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = "RECOMMENDED SENSITIVITIES",
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        fontWeight = FontWeight.ExtraBold,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        letterSpacing = 0.5.sp
+                    )
+                )
+            }
 
             // Settings Fields
-            SensitivityItemRow(label = "🎯 General", value = device.general)
-            SensitivityItemRow(label = "🔴 Red Dot", value = device.redDot)
-            SensitivityItemRow(label = "🔍 2X Scope", value = device.scope2x)
-            SensitivityItemRow(label = "🔭 4X Scope", value = device.scope4x)
-            SensitivityItemRow(label = "🎯 Sniper Scope", value = device.sniperScope)
-            SensitivityItemRow(label = "👀 Free Look", value = device.freeLook)
+            SensitivityItemRow(icon = Icons.Default.GpsFixed, label = "General", value = device.general)
+            SensitivityItemRow(icon = Icons.Default.FiberManualRecord, label = "Red Dot", value = device.redDot)
+            SensitivityItemRow(icon = Icons.Default.ZoomIn, label = "2X Scope", value = device.scope2x)
+            SensitivityItemRow(icon = Icons.Default.CenterFocusStrong, label = "4X Scope", value = device.scope4x)
+            SensitivityItemRow(icon = Icons.Default.TrackChanges, label = "Sniper Scope", value = device.sniperScope)
+            SensitivityItemRow(icon = Icons.Default.RemoveRedEye, label = "Free Look", value = device.freeLook)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -567,7 +608,7 @@ fun RecommendedSettingsScreen(
                 text = "Change Phone Model",
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             )
         }
@@ -576,6 +617,7 @@ fun RecommendedSettingsScreen(
 
 @Composable
 fun SensitivityItemRow(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
     label: String,
     value: Int
 ) {
@@ -597,13 +639,22 @@ fun SensitivityItemRow(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = label,
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(18.dp)
                     )
-                )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = label,
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    )
+                }
                 Text(
                     text = value.toString(),
                     style = MaterialTheme.typography.bodyLarge.copy(
