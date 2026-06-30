@@ -30,7 +30,7 @@ jobs:
 
       - name: List APK output dir
         if: success()
-        run: find app/build/outputs -type f -name "*.apk" -print
+        run: find app/build/outputs -type f -name "*.apk" -print > apk-list.txt; cat apk-list.txt
 
       - name: Upload APK artifact
         if: success()
@@ -40,15 +40,15 @@ jobs:
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
 
-      - name: Publish failure log as Gist
+      - name: Publish failure log to debug-logs branch
         if: failure()
         run: |
-          tail -c 60000 build-output.log > build-output-tail.log
-          python3 -c "
-          import json
-          with open('build-output-tail.log') as f:
-              content = f.read()
-          with open('payload.json', 'w') as out:
-              json.dump({'description': 'Build failure log', 'public': False, 'files': {'build-output.log': {'content': content}}}, out)
-          "
-          curl -s -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -d @payload.json https://api.github.com/gists
+          git config user.email "ci@example.com"
+          git config user.name "CI Bot"
+          tail -c 60000 build-output.log > debug-build-output.log 2>/dev/null || echo "no build-output.log" > debug-build-output.log
+          find app/build/outputs -type f -name "*.apk" > debug-apk-list.txt 2>/dev/null || true
+          git checkout --orphan debug-logs
+          git rm -rf --cached . > /dev/null 2>&1 || true
+          git add debug-build-output.log debug-apk-list.txt
+          git commit -m "CI debug log $(date -u +%Y%m%dT%H%M%SZ)"
+          git push -f origin debug-logs
